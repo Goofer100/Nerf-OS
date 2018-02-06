@@ -1,6 +1,6 @@
 /* Nerf OS
-    Version 0.007
-    Datum 2018-02-05
+    Version 0.008
+    Datum 2018-02-06
 
 */
 
@@ -29,7 +29,7 @@ OneButton SCHALTER2(10, false); // Schalter 2
 LCD5110 myGLCD(7, 6, 5, 3, 4);
 
 //Allegemien Parameter und Variblen
-float Version = 0.007; // Version der Software
+float Version = 0.008; // Version der Software
 unsigned long currentTime = millis(); // Zeitstempel des Durchlaufs - Aktuelle Zeit
 
 
@@ -57,7 +57,7 @@ const float referenceVolts = 5.0; // MAX Spannung Eingang
 const float RA = 1000; //Widerstand 1 in Ohm
 const float RB = 510; //Widerstand 2 in Ohm
 const float resistorFactor = 1023.0 * (RB / (RA + RB)); // Widerstandsfaktor Spannungsteiler
-long MessungVolt = 10000; // Millisekunden bis zur nächsten Voltmessung
+long MessungVolt = 1000; // Millisekunden bis zur nächsten Voltmessung
 unsigned long lasttimeVolt = 0; //Zeitstempel des letzten Durchlaufs der Voltmessung
 
 //Parameter für die LEDsRot
@@ -558,6 +558,11 @@ void Pfeil(int A, int B, int V) // A = X-Koordinate B = Y-Koordinate C = 1 = Vol
     myGLCD.drawLine(A + 7, B + 3, A + 7, B + 5);
     myGLCD.drawLine(A + 1, B + 5, A + 3, B + 3);
     myGLCD.drawLine(A + 4, B + 3, A + 6, B + 5);
+    myGLCD.clrLine(A + 4, B + 1, A + 6, B + 3);  
+    myGLCD.clrLine(A + 4, B + 2, A + 6, B + 4);
+    myGLCD.clrLine(A + 1, B + 3, A + 3, B + 1);
+    myGLCD.clrLine(A + 1, B + 4, A + 3, B + 2);
+  
   }
   if (V == 1) // Voller Pfeil
   {
