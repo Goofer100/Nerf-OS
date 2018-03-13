@@ -1,6 +1,6 @@
 /* Nerf OS
-    Version 0.008
-    Datum 2018-02-06
+    Version 0.009
+    Datum 2018-03-16
 
 */
 
@@ -29,7 +29,7 @@ OneButton SCHALTER2(10, false); // Schalter 2
 LCD5110 myGLCD(7, 6, 5, 3, 4);
 
 //Allegemien Parameter und Variblen
-float Version = 0.008; // Version der Software
+float Version = 0.009; // Version der Software
 unsigned long currentTime = millis(); // Zeitstempel des Durchlaufs - Aktuelle Zeit
 
 
@@ -40,6 +40,9 @@ int Clearcounter = 0; // Counter Löschen zur Verhinderung von Artefakten auf de
 //Parameter und Variblen für die Lichtschranke im Lauf
 int HELLIGKEIT = 1023; //Definition Helligkeitsmessewert
 const int HELLIGKEITREF = 200; // Wert unter den das Licht fallen muss, damit die Lichtschranke auslöst
+
+//Parameter und Variablen für Munitionszähler
+int Unterbrochen = 0; //Wert zum bestimmen ob wechsel zwischen unterbochen oder nicht 1=unterbrochen, 0= nicht unterbrochen 
 
 
 //Parameter und Variblen für die Magazine
@@ -240,9 +243,15 @@ void CheckLauf()
 {
   HELLIGKEIT = analogRead(LAUF);
 
-  if (HELLIGKEIT < HELLIGKEITREF ) //Wenn der Sensorwert über Parameter beträgt….
+
+if (HELLIGKEIT < HELLIGKEITREF ) //Wenn der Sensorwert über Parameter beträgt….
   {
-    CalcAmmo();  //Berechnung Restmunition
+    if (Unterbrochen == 0) {
+      Unterbrochen = 1; // setzten des Wertes auf unterbrochen
+      CalcAmmo();  //Berechnung Restmunition
+    }
+  }else {
+    Unterbrochen = 0; //Wenn der Sensorwert unter Parameter beträgt setzten des wertes auf nichtunterbrochen
   }
 }
 
